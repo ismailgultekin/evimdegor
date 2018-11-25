@@ -1,2 +1,6 @@
 # evimdegor
-Evimde Gör Nodejs
+
+Evimdegör Proje Reposu
+
+Projeyi başlatmak için
+>  npm install && bower install && npm start

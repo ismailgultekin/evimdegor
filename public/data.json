@@ -1,0 +1,112 @@
+{
+	"objects": [
+		{
+			"id": 1,
+			"name": "Halı",
+			"datas": [
+				{
+					"id" : 1,
+					"name": "Merinos 1",
+					"image": "1.png"
+				},
+				{
+					"id": 2,
+					"name": "Merinos 2",
+					"image": "2.png"
+				},
+				{
+					"id": 3,
+					"name": "Merinos 3",
+					"image": "3.png"
+				}
+			]
+		},
+		{
+			"id": 2,
+			"name": "Mobilya",
+			"datas": [
+				{
+					"id" : 1,
+					"name": "Bellona 1",
+					"image": "1.png"
+				},
+				{
+					"id": 2,
+					"name": "Bellona 2",
+					"image": "2.png"
+				}
+			]
+		},
+		{
+			"id": 3,
+			"name": "Duvar",
+			"datas": [
+				{
+					"id" : 1,
+					"name": "Tip 1",
+					"image": "1.png"
+				},
+				{
+					"id": 2,
+					"name": "Tip 2",
+					"image": "2.png"
+				}
+			]
+		},
+		{
+			"id": 4,
+			"name": "Zemin",
+			"datas": [
+				{
+					"id" : 1,
+					"name": "Tip 1",
+					"image": "3.png"
+				},
+				{
+					"id": 2,
+					"name": "Tip 2",
+					"image": "2.png"
+				},
+				{
+					"id": 3,
+					"name": "Tip 3",
+					"image": "1.png"
+				}
+			]
+		},
+		{
+			"id": 5,
+			"name": "Perde",
+			"datas": [
+				{
+					"id" : 1,
+					"name": "Tip 1",
+					"image": "1.png"
+				},
+				{
+					"id": 2,
+					"name": "Tip 2",
+					"image": "2.png"
+				}
+			]
+		},
+		{
+			"id": 6,
+			"name": "Tavan",
+			"datas": [
+				{
+					"id" : 1,
+					"name": "Tip 1",
+					"image": "1.png"
+				},
+				{
+					"id": 2,
+					"name": "Tip 2",
+					"image": "2.png"
+				}
+			]
+		}
+
+	]
+
+}

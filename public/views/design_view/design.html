@@ -1,0 +1,440 @@
+<div class="black_area"></div>
+
+<div class=" containerObj">
+	
+	<div class="sahne">
+
+		<div class="obj hali" >
+			<img ng-src="https://evimdegor.com/Site_Resimler/hali/hd/{{ haliSource }}" img-preload class="fade">
+		</div>
+
+		<div class="obj koltuk">
+			<img ng-src="https://evimdegor.com/Site_Resimler/oda/hd/{{ koltukSource }}" img-preload class="fade">
+		</div>
+
+		<div class="obj duvar">
+			<img ng-src="https://evimdegor.com/Site_Resimler/oda/hd/{{ duvarSource }}" img-preload class="fade">
+		</div>
+
+		<div class="obj zemin">
+			<img ng-src="https://evimdegor.com/Site_Resimler/oda/hd/{{ zeminSource }}" img-preload class="fade">
+		</div>
+
+		<div class="obj perde">
+			<img ng-src="https://evimdegor.com/Site_Resimler/oda/hd/{{ perdeSource }}" img-preload class="fade">
+		</div>
+
+		<div class="obj tavan">
+			<img ng-src="https://evimdegor.com/Site_Resimler/oda/hd/{{ tavanSource }}" img-preload class="fade">
+		</div>
+
+		<div class="obj manzara" >
+			<img ng-src="https://evimdegor.com/Site_Resimler/oda/hd/{{ camSource }}" img-preload class="fade">
+		</div>
+		
+		<div class="sahne-buttons">
+			<button 
+				type="button" 
+				class="btn btn-success btn-bg" 
+				ng-click="detayDialog()" 
+				ng-show="haliSource">
+				Halıyı İncele
+			</button>
+			<button type="button" class="btn btn-success btn-bg" ng-click="clickToOpen()">Akıllı Tara</button>
+		</div>
+
+	</div>
+		
+</div>
+
+
+
+
+<script type="text/ng-template" id="templateId">
+
+    <div class="ui form">
+
+
+		<div class="three_a blue ui buttons center tabs" ng-show="!haliListesiShowStatus">
+		  <button class="ui button active">
+		  	<img src="img/icons/hali.png" class="white hidden" />
+		  	<img src="img/icons/hali_active.png" class="brown " />
+		  </button>
+		  <button class="ui button">
+		  	<img src="img/icons/duvar.png" class="white " />
+		  	<img src="img/icons/duvar_active.png" class="brown hidden" />
+		  </button>
+		  <button class="ui button">
+		  	<img src="img/icons/perde.png" class="white" />
+		  	<img src="img/icons/perde_active.png" class="brown hidden" />
+		  </button>
+		  <button class="ui button">
+		  	<img src="img/icons/mobilya.png" class="white" />
+		  	<img src="img/icons/mobilya_active.png" class="brown hidden" />
+		  </button>
+		  <button class="ui button">
+		  	<img src="img/icons/zemin.png" class="white" />
+		  	<img src="img/icons/zemin_active.png" class="brown hidden" />
+		  </button>	  
+		</div>
+
+		<button class="ui fluid blue button btn-bg" ng-click="tekrarTara()" ng-show="haliListesiShowStatus" style="margin-top:4%">
+			Tekrar Tara
+		</button>
+
+		<div id="haliListesi"  ng-show="!!haliListesi.length && haliListesiShowStatus">
+			<div ng-repeat="k in haliListesi" class="row"  ng-class-odd="'odd'" ng-class-even="'even'"> 
+				<div class="col-md-12 haliListesi">
+					<div class="col-xs-4 ">
+						<img class="listeHali" ng-src="https://evimdegor.com/Site_Resimler/hali/hd/{{ k.image_hd }}" />
+					</div>
+					<div class="listeHaliAdi col-xs-6">
+						<h5>{{ k.name }}</h5>
+						<div class="desc">
+							<div>{{ k.marka }}</div>
+							<div><h4>{{ k.fiyat }} ₺</h4></div>
+						</div> 
+					</div>
+					<div class="col-xs-2 pull-right show-hali-btn ">
+						<button class="ui compact icon button  btn-bg" ng-click="changeHali(k.image_hd, k.id)">
+							<i class="unhide  icon"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<button class="ui fluid blue button" ng-click="loadMore()" ng-show="haliListesiShowStatus">
+			Daha Fazla Yükle
+		</button>
+
+    	<div id="tab_contents" ng-show="!haliListesiShowStatus">
+
+    		<div class="active">
+				<div class="field">
+					<label>Klasik / Spor</label>
+					<select ng-model="selectedItems.klasikSpor">
+						<option value="-1" selected> -- Seçiniz -- </option>
+						<option value="1">Klasik</option>
+						<option value="0">Spor</option>
+					</select>
+				</div>
+
+				<div class="field">
+					<label>Çocuk / Standart</label>
+					<select ng-model="selectedItems.cocukOzelTasarim">
+						<option value="-1" selected> -- Seçiniz -- </option>
+						<option value="1">Çocuk</option>
+						<option value="0">Standart</option>
+					</select>
+				</div>
+
+				<div class="field">
+					<label>Zemin Rengi</label>
+					<select 
+					    	ng-model="selectedItems.zeminRengi" 
+						    ng-options="k.id as k.renk for k in renkler">
+							<option value=""> -- Seçiniz -- </option>
+					</select>
+				</div>
+
+				<div class="field">
+					<label>Motif Rengi</label>
+					<select 
+					    	ng-model="selectedItems.motifRengi" 
+						    ng-options="k.id as k.renk for k in renkler">
+							<option value=""> -- Seçiniz -- </option>
+					</select>
+				</div>
+
+				<!--
+				<div class="field">
+					<label>Motif Rengi 1</label>
+					<select 
+					    	ng-model="selectedItems.motifRengi1" 
+						    ng-options="k.id as k.renk for k in renkler">
+							<option value=""> -- Seçiniz -- </option>
+					</select>
+				</div>
+				-->
+
+				<div class="field">
+					<label>Marka</label>
+					<select 
+					    	ng-model="selectedItems.markaSelect" 
+					    	ng-change="changeMarka()" 
+						    ng-options="k.id as k.name for k in markalar">
+							<option value=""> -- Seçiniz -- </option>
+					</select>
+				</div>
+
+				<div class="field" ng-hide="!!!seriler.length">
+					<label>Seriler</label>
+					<select 
+					    	ng-model="selectedItems.seriSelect" 
+					    	ng-change="changeMarka()" 
+						    ng-options="k.id as k.name for k in seriler">
+							<option value=""> -- Seçiniz -- </option>
+					</select>
+				</div>
+
+
+				<button class="ui fluid blue button btn-bg" ng-click="detaylandir()">
+				  Detaylandır
+				</button>
+
+				<div class="alert alert-danger margin-top-20" ng-model="aramaDurum" ng-if="aramaDurum">
+				  Aradığınız kriterlere uygun halı bulunamadı.
+				</div>
+
+			</div>
+
+    		<div>
+				<div class="field">
+					<label>Duvar</label>
+					<select 
+					    	ng-model="selectedItems.duvarSelect" 
+					    	ng-change="change(3)" 
+						    ng-options="k.num as k.name for k in data[1].datas">
+					</select>
+
+				</div>
+			</div>
+
+    		<div>
+				<div class="field">
+					<label>Perde</label>
+					<select 
+					    	ng-model="selectedItems.perdeSelect" 
+					    	ng-change="change(5)" 
+						    ng-options="k.num as k.name for k in data[4].datas">
+					</select>
+				</div>
+			</div>
+
+			<div>
+				<div class="field">
+					<label>Mobilya</label>
+					<select 
+					    	ng-model="selectedItems.koltukSelect" 
+					    	ng-change="change(2)" 
+						    ng-options="k.num as k.name for k in data[5].datas">
+					</select>
+				</div>
+			</div>
+
+			
+
+			<div>
+				<div class="field">
+					<label>Zemin</label>
+					<select 
+					    	ng-model="selectedItems.zeminSelect" 
+					    	ng-change="change(4)" 
+						    ng-options="k.num as k.name for k in data[2].datas">
+					</select>
+				</div>
+			</div>
+
+			<div class="clear"></div>
+
+		</div>
+
+	</div>
+</script>
+
+
+<script type="text/ng-template" id="detayDialog">
+	<section class="col1-layout">
+    <div class="main">
+      <div class="">
+        <div class="row">
+          <div class="col-main">
+            <div class="product-view">
+              <div class="product-essential">
+                  <input name="form_key" value="6UbXroakyQlbfQzK" type="hidden">
+                  <div class="product-img-box col-lg-12 col-sm-12 col-xs-12">
+                    <div class="new-label new-top-left"> New </div>
+                    <div class="product-image">
+                      <div class="product-full"> 
+                      	<img id="product-zoom" ng-src="https://evimdegor.com/Site_Resimler/hali/hd/{{ imgName }}" data-zoom-image="products-images/product1.jpg" alt="product-image" img-preload class="fade"/> 
+                      </div>
+                    </div>
+                    <!-- end: more-images --> 
+                  </div>
+                  <div class="product-shop col-lg-12 col-sm-12 col-xs-12" style="padding:4%">
+                    <div class="product-name">
+                      <h1>{{ title }}</h1>
+                    </div>
+                    <div class="ratings">
+                      <p class="rating-links"> <a href="javascript:;">{{ markaAdi }}</a> <span class="separator">|</span> <a href="javascript:;">{{ seriAdi }}</a> </p>
+                    </div>
+                    <div class="price2-block">
+                      <div class="price2-box">
+                        <p class="special-price2"> <span class="price2-label">Special price2</span> <span id="product-price2-48" class="price2"> {{ indirimliFiyat }}₺ </span> </p>
+                        <p class="old-price2"> <span class="price2-label">Regular price2:</span> <span class="price2"> {{ fiyat }}₺ </span> </p>
+                      </div>
+                    </div>
+                    <div class="short-description">
+                      <h2>Ebatlar</h2>
+                      <div style="font-size:13px" ng-repeat="k in ebatlar">
+                        <div>
+                          <label>
+                            <input type="radio" name="ebat" ng-model="secilenler.ebatSelected" value="{{ k.num }}">
+                            {{ k.ebat }} / {{ k.metrekare }}m²
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="add-to-box">
+                      <div class="add-to-cart">
+
+                        <div class="pull-left col-xs-7  col-md-6" style="padding:0!important">
+                          <div class="custom pull-left">
+                            <button onClick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 0 ) result.value--;return false;"ng-click="siparisArtirAzalt('-')" class="reduced items-count" type="button2"><i class="fa fa-minus">&nbsp;</i></button>
+                            <input type="text" class="input-text qty" title="Qty" value="1" ng-model="siparisAdet"  maxlength="12" id="qty" name="qty">
+                            <button onClick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;" ng-click="siparisArtirAzalt('+')" class="increase items-count" type="button2"><i class="fa fa-plus">&nbsp;</i></button>
+                          </div>
+                        </div>
+
+                        <div class="col-xs-5  col-md-6 " style="padding:0">
+                          <button ng-click="siparisDialog()" class="button2 btn-cart" title="Sipariş Ver">SİPARİŞ VER</span></button>
+                        </div>
+
+                        <div class="col-xs-12" style="padding:5% 0 0 0">
+                          <p class="availability in-stock pull-left" style="padding:0; margin:0.4% 0.6% 0.4% 0 "  ng-repeat="k in ozellikler track by $index" ><span>{{k}}</span></p>
+                        </div>
+
+                      </div>
+                      <!--<div class="email-addto-box">
+                        <ul class="add-to-links">
+                          <li> <a class="link-wishlist" href="wishlist.html"><span>Add to Wishlist</span></a></li>
+                        </ul>
+                      </div>-->
+                    </div>
+                    
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</script>
+
+
+<script type="text/ng-template" id="siparisDialog">
+
+ <form class="ui form" name="siparisForm" style="text-align:left" ng-submit="siparisOlustur()" ng-hide="kayitDurum">
+  <div class="field">
+    <label>Ad</label>
+    <input type="text" name="first-name" placeholder="Ad" ng-model="siparis.ad" required>
+  </div>
+  <div class="field">
+    <label>Soyad</label>
+    <input type="text" name="last-name" placeholder="Soyad" ng-model="siparis.soyad" required>
+  </div>
+  <div class="field">
+    <label>GSM</label>
+    <input type="text" name="tc" placeholder="GSM" ng-model="siparis.gsm" required>
+  </div>
+  <div class="field">
+    <label>E-mail</label>
+    <input type="text" name="email" placeholder="E-mail" ng-model="siparis.email" required>
+  </div>
+  <div class="field">
+    <label>Adres</label>
+    <textarea rows="2" ng-model="siparis.adres" required></textarea>
+  </div>
+  <button class="ui button" ng-click="closeSiparisDialog()">İptal Et</button>
+  <button class="ui blue button btn-bg" ng-click="siparisOlustur()">
+		Sipariş Oluştur
+  </button>
+
+</form>
+
+<form class="ui form" name="odemeForm" style="text-align:left"  ng-if="kayitDurum">
+	<div class="list" style="margin-top:20px">
+	  <div class="field">
+	      <label class="item item-input">
+	        <span class="input-label">Kart Sahibi</span>
+	        <input type="text" ng-model="siparis.kartSahibi" required>
+	      </label>
+      </div>
+	  <div class="field">
+	      <label class="item item-input">
+	        <span class="input-label">Kart Numarası</span>
+	        <input type="text" ng-model="siparis.kartNo" required>
+	      </label>
+	   </div>
+
+	  	  <div class="field">
+	      <label class = "item item-input item-select">
+			<div class="input-label">Skt. Ay</div>
+			<select class="customSelect" 
+			    	ng-model="siparis.sktAy">
+					<option value="01"> 01 </option>
+					<option value="02"> 02 </option>
+					<option value="03"> 03 </option>
+					<option value="04"> 04 </option>
+					<option value="05"> 05 </option>
+					<option value="06"> 06 </option>
+					<option value="07"> 07 </option>
+					<option value="08"> 08 </option>
+					<option value="09"> 09 </option>
+					<option value="10"> 10 </option>
+					<option value="11"> 11 </option>
+					<option value="12"> 12 </option>
+			</select>
+		 </label>
+		</div>
+
+	   
+		<div class="field">
+		 <label class = "item item-input item-select">
+			<div class="input-label">Skt. Yıl</div>
+			<select class="customSelect" 
+			    	ng-model="siparis.sktYil">
+					<option value="16"> 16 </option>
+					<option value="17"> 17 </option>
+					<option value="18"> 18 </option>
+					<option value="19"> 19 </option>
+					<option value="20"> 20 </option>
+					<option value="21"> 21 </option>
+					<option value="22"> 22 </option>
+					<option value="23"> 23 </option>
+					<option value="24"> 24 </option>
+					<option value="25"> 25 </option>
+					<option value="26"> 26 </option>
+			</select>
+		 </label>
+		</div>
+
+	 	<div class="clear"></div>
+
+	 	<div class="field">
+	      <label class="item item-input">
+	        <span class="input-label">Csv/Csv2</span>
+	        <input type="text" ng-model="siparis.csv" required>
+	      </label>
+	     </div>
+    </div>
+    <button class="ui blue button btn-bg" ng-click="odemeYap()">
+        Ödeme Yap
+    </button>
+</form>
+
+  	<div class="messages" style="margin-top:3%">
+	  <div class="alert alert-success" ng-if="kayitDurumSon == true">
+		<strong>Siparişiniz Oluşturuldu! Sizinle en kısa zamanda iletişime geçilecektir.</strong>
+	  </div>
+	  <div class="alert alert-danger" ng-if="kayitDurumSon == false">
+		  <strong>Kayıt Yapılamadı!</strong>
+       </div>
+	</div>
+
+</script>
+
+	

@@ -1,0 +1,45 @@
+{
+	"objects": [
+		{
+			"id": 1,
+			"tip": "0", // klasik:0  spor:1
+			"zemin_rengi": "mavi",
+			"motif_rengi": "sari",
+			"motif_rengi2": "yesil",
+			"marka": "merinos",
+			"seri": 1,
+			"kodu": 1312,
+			"adi": "merinos abks"
+		}
+
+	]
+
+}
+
+/*
+Select menüler sırasıyla
+1) Klasik, Spor
+2) Zemin Rengi
+3) Motif Rengi
+4) Motif Rengi 2
+5) Marka
+6) Seri
+7) Kodu
+8) Adı
+ilk 6 olacak
+7 ve 8 olmasın
+Marka ve seri il ilce uygulaması gibi
+marka atlas seçerse atlasın serileri gelecek
+royali seçerse
+royalin serileri gelecek
+akıllı tara butonu tek olmayacak
+duvar, Mobilya, Perde, Zemin ve Akıllı tara
+butonları üstte tam sahnenin ortasında yer alacak
+Mobilya tıklayınca
+renk seçeneği çıkacak
+kahverengi derse
+mobilya kahverengi olacak
+bu söylediklerim
+odanı tasarla bölümünde olacak
+oda görüntüsünü ekle bölümünde sadece akıllı tara butonu olacak
+*/
